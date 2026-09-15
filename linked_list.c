@@ -58,7 +58,10 @@ node *insertion_at_position(node *head)
     scanf("%d", &pos);
     node *curr = create_node();
     if (head == NULL)
+    {
+        printf("there is no node so creating one\n");
         return curr;
+    }
     node *temp;
     temp = head;
     int i = 1;
@@ -80,10 +83,37 @@ node *insertion_at_position(node *head)
     return head;
 }
 
+// case::4 [insertion after node]
+node *insert_after_node(node *head)
+{
+    int n_value;
+    printf("enter the node value after which u want to insert : ");
+    scanf("%d", &n_value);
+
+    node *temp = head;
+    while (temp != NULL && temp->info != n_value)
+        temp = temp->next;
+    if (temp == NULL)
+    {   printf("node not found\n");
+        return head;
+    }
+
+    node *curr = create_node();
+    if (head == NULL)
+    {
+        printf("List was empty, new node created.\n");
+        return curr;
+    }
+    curr->next = temp->next;
+    temp->next = curr;
+    return head;
+}
+
 // printing linked list
 void display(node *head)
 {
     node *temp = head;
+    printf("-------LINKED LIST-------\n");
     while (temp != NULL)
     {
         printf("%d\n", temp->info);
@@ -97,6 +127,7 @@ int main()
     head = left_insertion(head);
     head = right_insertion(head);
     head = insertion_at_position(head);
+    head = insert_after_node(head);
     display(head);
     return 0;
 }
