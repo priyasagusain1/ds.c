@@ -94,7 +94,8 @@ node *insert_after_node(node *head)
     while (temp != NULL && temp->info != n_value)
         temp = temp->next;
     if (temp == NULL)
-    {   printf("node not found\n");
+    {
+        printf("node not found\n");
         return head;
     }
 
@@ -106,6 +107,88 @@ node *insert_after_node(node *head)
     }
     curr->next = temp->next;
     temp->next = curr;
+    return head;
+}
+
+// deleting from left side
+node *delete_from_left(node *head)
+{
+    if (head == NULL)
+        printf("linked list does not exist\n");
+    if(head->next==NULL)
+    {
+        free(head);
+        return NULL;
+    }
+    else
+    {
+        node *temp;
+        temp = head;
+        head = head->next;
+        temp->next = NULL;
+        free(temp);
+    }
+
+    return head;
+}
+
+//deleting fom right
+node* delete_from_right(node* head)
+{
+    if (head == NULL)
+    {
+        printf("List is empty\n");
+        return head;
+    }
+    if (head->next == NULL)
+    {
+        free(head);
+        return NULL;
+    }
+    node* temp1=head;
+    node* temp2=head;
+    while(temp1->next!=NULL)
+    {
+        temp1=temp1->next;
+    }
+    while(temp2->next!=temp1)
+    {
+        temp2=temp2->next;
+    } 
+    temp2->next=NULL; 
+    free(temp1);
+    return head; 
+}
+
+//deleting a node in between
+node* delete_at_position(node* head)
+{
+    if(head == NULL)
+    {
+        printf("list is empty\n");
+        return head;
+    }
+    int pos;
+    printf("enter postion of node u want to delete : ");
+    scanf("%d",&pos);
+    
+    int i=1;
+    node* temp=head;
+    if(pos==1)
+    {
+        head=head->next;
+        free(temp);
+        return head;
+    }
+
+    while(i<pos-1 && temp->next!=NULL)
+    {
+        temp=temp->next;
+        i++;
+    }
+    temp->next=temp->next->next;
+    temp->next->next=NULL;
+    free(temp->next->next);
     return head;
 }
 
@@ -125,9 +208,16 @@ int main()
 {
     node *head = NULL;
     head = left_insertion(head);
+    head = left_insertion(head);
+    head = left_insertion(head);
+    head = left_insertion(head);
+    /*
     head = right_insertion(head);
     head = insertion_at_position(head);
     head = insert_after_node(head);
+    */
+    display(head);
+    head = delete_at_position(head);
     display(head);
     return 0;
 }
